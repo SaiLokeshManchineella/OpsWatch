@@ -4,7 +4,7 @@ A full-stack **Operations Intelligence Dashboard** that enables teams to monitor
 
 > **Live Demo**: [http://your-ec2-ip](http://your-ec2-ip)  
 > **Backend API**: [http://your-ec2-ip:8000](http://your-ec2-ip:8000)  
-> **GitHub**: [https://github.com/SaiLokeshManchineella/opswatch-pro](https://github.com/SaiLokeshManchineella/opswatch-pro)
+> **GitHub**: [https://github.com/SaiLokeshManchineella/OpsWatch](https://github.com/SaiLokeshManchineella/OpsWatch)
 
 ---
 
@@ -237,8 +237,8 @@ ssh -i your-key.pem ubuntu@<EC2_PUBLIC_IP>
 ### 4. Clone and Configure
 
 ```bash
-git clone https://github.com/SaiLokeshManchineella/opswatch-pro.git
-cd opswatch-pro
+git clone https://github.com/SaiLokeshManchineella/OpsWatch.git
+cd OpsWatch
 
 # Frontend env
 cp .env.example .env

@@ -260,6 +260,21 @@ It will automatically configure the required `.env` files and start the Docker c
 - **Backend Health**: `http://<EC2_PUBLIC_IP>:8000/`
 - **API**: `http://<EC2_PUBLIC_IP>:8000/api/v1/insights`
 
+---
+
+## 🔄 CI/CD Automation (GitHub Actions)
+
+This repository includes a Github Actions Workflow (`.github/workflows/deploy.yml`) that will automatically deploy your code to your EC2 instance every time you push to the `main` branch.
+
+To enable this, go to your GitHub repository **Settings > Secrets and variables > Actions**, and add the following **Repository Secrets**:
+
+1. **`EC2_HOST`**: The Public IP address of your EC2 instance (e.g., `54.123.45.67`)
+2. **`EC2_USERNAME`**: The SSH username (default for Ubuntu is `ubuntu`)
+3. **`EC2_SSH_KEY`**: The entire contents of your private `.pem` key file used to SSH into the instance.
+
+Once these secrets are saved, any `git push origin main` will trigger the workflow to SSH securely into your instance, pull the latest code, and restart the Docker containers!
+
+
 ### Useful Commands
 
 ```bash

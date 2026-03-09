@@ -1,0 +1,40 @@
+name: Deploy to Amazon EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            # Navigate to the application directory (or clone if it doesn't exist)
+            if [ ! -d "OpsWatch" ]; then
+              git clone https://github.com/SaiLokeshManchineella/OpsWatch.git
+              cd OpsWatch
+            else
+              cd OpsWatch
+              # Stash any local changes (.env files) and pull the latest code
+              git stash
+              git pull origin main
+              git stash pop || echo "No stashed changes to pop"
+            fi
+
+            # Rebuild and restart the Docker containers
+            docker-compose up --build -d
+            
+            # Prune old images to save disk space
+            docker image prune -f

@@ -234,33 +234,27 @@ exit
 ssh -i your-key.pem ubuntu@<EC2_PUBLIC_IP>
 ```
 
-### 4. Clone and Configure
+### 4. Clone and Deploy
 
 ```bash
 git clone https://github.com/SaiLokeshManchineella/OpsWatch.git
 cd OpsWatch
 
-# Frontend env
-cp .env.example .env
-# Edit: VITE_API_URL=http://<EC2_PUBLIC_IP>:8000/api/v1
-nano .env
+# Make the deployment script executable
+chmod +x deploy.sh
 
-# Backend env
-cp backend/.env.example backend/.env
-# Edit: DATABASE_URL, JWT_SECRET_KEY, CORS_ORIGINS (add http://<EC2_PUBLIC_IP>)
-nano backend/.env
+# Run the interactive deployment wizard
+./deploy.sh
 ```
 
-### 5. Build and Deploy
+The script will prompt you for:
+1. Your EC2 Public IP address
+2. Your PostgreSQL/Supabase Database URL
+3. A JWT Secret string (or it will auto-generate one for you)
 
-```bash
-# Export VITE_API_URL for docker-compose build args
-export VITE_API_URL=http://<EC2_PUBLIC_IP>:8000/api/v1
+It will automatically configure the required `.env` files and start the Docker containers!
 
-docker-compose up --build -d
-```
-
-### 6. Verify
+### 5. Verify
 
 - **Frontend**: `http://<EC2_PUBLIC_IP>`
 - **Backend Health**: `http://<EC2_PUBLIC_IP>:8000/`
